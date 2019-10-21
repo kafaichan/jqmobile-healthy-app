@@ -27,10 +27,11 @@
 		    </div>
 
 		    <div data-role="content">
-		        <input type="text" name="number-guess" id="number-guess" value="">
+		    	<label for="number-guess">Please enter a number:</label>
+		        <input type="tel" name="number-guess" id="number-guess" value="">
 		        <label id="try-msg">You have tried 0 times</label>
 		        <label id="hint-msg">Guess a number</label>
-		        <button class="ui-btn ui-shadow" id="btn-submit">Submit</button>
+		        <button class="ui-btn ui-shadow" id="btn-guess">Guess</button>
 		    </div>
 		</div>
 
@@ -52,18 +53,18 @@
 				}
 			});
 
-			$('#btn-submit').on('click', function(e){
+			$('#btn-guess').on('click', function(e){
 				var number_guess = parseInt($("#number-guess").val());
-				if(isNaN(number_guess)) return;
-				if(number_guess > answer){
-					$('#hint-msg').html("Try a smaller number");
-					try_count += 1;					
+				if(isNaN(number_guess)){
+					$('#hint-msg').html("Please input a valid number");
+				}else if(number_guess > answer){
+					$('#hint-msg').html("Try a smaller number");			
 				}else if(number_guess < answer){
 					$('#hint-msg').html("Try a larger number");
-					try_count += 1;
 				}else{
 					$('#hint-msg').html("Bingo!");
 				}
+				try_count += 1;
 				$('#try-msg').html("You have tried " + try_count + " times");
 			});
 		</script>
