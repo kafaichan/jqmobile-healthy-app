@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Healthy App</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+		<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+		<style>
+			#try-msg {
+				color: blue;
+			}
+
+			#hint-msg {
+				color: red;
+			}
+		</style>
+	</head>
+
+	<body>
+		<a href="./guess_num.html">Guess Number</a>
+		<div id="page-rand-game" data-role="page">
+		    <div data-role="header">
+		        <h1>Guess a Number</h1>
+		    </div>
+
+		    <div data-role="content">
+		        <input type="text" name="number-guess" id="number-guess" value="">
+		        <label id="try-msg">You have tried 0 times</label>
+		        <label id="hint-msg">Guess a number</label>
+		        <button class="ui-btn ui-shadow" id="btn-submit">Submit</button>
+		    </div>
+		</div>
+
+		<script>
+			function randInt(min, max){
+				return Math.floor(Math.random() * (max-min+1)) + min;
+			}
+
+			var answer;
+			var try_count = 0;
+			$(function(){
+				answer = randInt(0,101);
+			});
+
+			$('#number-guess').on('keydown', function(e){				
+				if(e.keyCode < 48 || e.keyCode > 57) {
+					if(e.keyCode == 8 || e.keyCode == 127) return;			
+					e.preventDefault();
+				}
+			});
+
+			$('#btn-submit').on('click', function(e){
+				var number_guess = parseInt($("#number-guess").val());
+				if(isNaN(number_guess)) return;
+				if(number_guess > answer){
+					$('#hint-msg').html("Try a smaller number");
+					try_count += 1;					
+				}else if(number_guess < answer){
+					$('#hint-msg').html("Try a larger number");
+					try_count += 1;
+				}else{
+					$('#hint-msg').html("Bingo!");
+				}
+				$('#try-msg').html("You have tried " + try_count + " times");
+			});
+		</script>
+	</body>
+</html>
